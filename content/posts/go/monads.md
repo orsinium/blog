@@ -543,7 +543,7 @@ Elixir:
 Go:
 
 ```go
-func(a int, b int) int { return a + b}
+func(a int, b int) int { return a + b }
 ```
 
 This is one of the small things that seem not important but are crucial for a language to be functional.

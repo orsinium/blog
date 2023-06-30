@@ -47,25 +47,31 @@ Title = "Hi, I'm Gram 👋"
 Content = "I write about 🐍 Python, 🏃 Go, 🧪 Elixir, 🦀 Rust, and some other software stuff."
 
 [[menu.main]]
-identifier = "go"
 name = "🏃 go"
 url = "/posts/go/"
 weight = "1"
 
 [[menu.main]]
-identifier = "py"
 name = "🐍 py"
 url = "/posts/py/"
 weight = "2"
 
 [[menu.main]]
-identifier = "tags"
+name = "🗑 misc"
+url = "/posts/misc/"
+weight = "3"
+
+[[menu.main]]
 name = "🏷 tags"
 url = "/tags/"
 weight = "10"
 
 [[menu.main]]
-identifier = "author"
-name = "👋 author"
-url = "https://orsinium.dev"
+name = "📶 rss"
+url = "/index.xml"
 weight = "20"
+
+[[menu.main]]
+name = "👋 me"
+url = "https://orsinium.dev"
+weight = "30"
