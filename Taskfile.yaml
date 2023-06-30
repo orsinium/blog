@@ -34,4 +34,4 @@ tasks:
     deps:
       - install
     cmds:
-      - ./bin/hugo server
+      - ./bin/hugo server {{.CLI_ARGS}}

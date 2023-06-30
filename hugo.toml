@@ -4,56 +4,64 @@ title = "Gram Publishing v2"
 paginate = "5"
 theme = "PaperMod"
 
-enableRobotsTXT = "true"
-buildDrafts = "false"
-buildFuture = "false"
-buildExpired = "false"
+enableRobotsTXT = true
+buildDrafts = false
+buildFuture = false
+buildExpired = false
 
 [minify]
-disableXML = "true"
-minifyOutput = "false"
+disableXML = true
+minifyOutput = false
 
 [params]
 env = "production # to enable google analytics, opengraph, twitter-cards and schema."
 title = "Gram Publishing v2"
 description = "ExampleSite description"
 keywords = ["blog", "golang", "python", "elixir", "rust", "security"]
-author = "Gram"
 # images = "["<link or path of image for opengraph, twitter-cards>"]"
 DateFormat = "2006-02-01"
-defaultTheme = "auto # dark, light"
-disableThemeToggle = "false"
+defaultTheme = "auto"
+disableThemeToggle = false
 
-ShowReadingTime = "true"
-ShowShareButtons = "true"
-ShowPostNavLinks = "true"
-ShowBreadCrumbs = "true"
-ShowCodeCopyButtons = "false"
-ShowWordCount = "true"
-ShowRssButtonInSectionTermList = "true"
-UseHugoToc = "true"
-disableSpecial1stPost = "false"
-disableScrollToTop = "false"
-comments = "false"
-hidemeta = "false"
-hideSummary = "false"
-showtoc = "false"
-tocopen = "false"
+ShowReadingTime = true
+ShowShareButtons = true
+ShowPostNavLinks = true
+ShowBreadCrumbs = true
+ShowCodeCopyButtons = true
+ShowWordCount = true
+ShowRssButtonInSectionTermList = true
+UseHugoToc = true
+disableSpecial1stPost = false
+disableScrollToTop = false
+comments = false
+hidemeta = false
+hideSummary = true
+showtoc = true
+tocopen = false
+
+[params.editPost]
+URL = "https://github.com/orsinium/blog/content"
+Text = "edit"
+appendFilePath = true
+
+[params.homeInfoParams]
+Title = "Hi, I'm Gram 👋"
+Content = "I write about 🐍 Python, 🏃 Go, 🧪 Elixir, 🦀 Rust, and some other software stuff"
 
 [[menu.main]]
-identifier = "categories"
-name = "categories"
-url = "/categories/"
-weight = "10"
+identifier = "golang"
+name = "🏃 golang"
+url = "/tags/golang/"
+weight = "1"
 
 [[menu.main]]
 identifier = "tags"
 name = "tags"
 url = "/tags/"
-weight = "20"
+weight = "10"
 
 [[menu.main]]
 identifier = "author"
 name = "author"
 url = "https://orsinium.dev"
-weight = "30"
+weight = "20"
