@@ -25,13 +25,13 @@ disableThemeToggle = false
 
 ShowReadingTime = true
 ShowShareButtons = true
-ShowPostNavLinks = true
+ShowPostNavLinks = false
 ShowBreadCrumbs = true
 ShowCodeCopyButtons = true
 ShowWordCount = true
 ShowRssButtonInSectionTermList = true
 UseHugoToc = true
-disableSpecial1stPost = false
+disableSpecial1stPost = true
 disableScrollToTop = false
 comments = false
 hidemeta = false
