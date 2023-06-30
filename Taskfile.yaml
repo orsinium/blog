@@ -1,0 +1,22 @@
+# https://taskfile.dev
+
+version: "3"
+
+vars:
+  HUGO_VERSION: "0.115.0"
+  HUGO_RELEASES: https://github.com/gohugoio/hugo/releases/download/
+
+tasks:
+  install:hugo:
+    status:
+      - test -f bin/hugo
+    cmds:
+      - mkdir -p bin
+      - wget {{.HUGO_RELEASES}}v{{.HUGO_VERSION}}/hugo_extended_{{.HUGO_VERSION}}_{{OS}}-{{ARCH}}.tar.gz
+      - defer: rm hugo_*.tar.gz
+      - tar -xvf hugo_*.tar.gz -C bin
+      - ./bin/hugo version
+
+  install:
+    cmds:
+      - task: install:hugo
