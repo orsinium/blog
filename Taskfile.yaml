@@ -17,6 +17,21 @@ tasks:
       - tar -xvf hugo_*.tar.gz -C bin
       - ./bin/hugo version
 
+  install:theme:
+    status:
+      - test -d themes/PaperMod
+    cmds:
+      - git clone https://github.com/adityatelange/hugo-PaperMod themes/PaperMod --depth=1
+
   install:
+    desc: "Install all dependencies"
     cmds:
       - task: install:hugo
+      - task: install:theme
+
+  serve:
+    desc: "Run dev server"
+    deps:
+      - install
+    cmds:
+      - ./bin/hugo server
