@@ -1,8 +1,6 @@
 ---
 title: "How to use GoString in Go"
 date: 2022-07-01
-tags:
-  - golang
 ---
 
 The package [fmt](https://pkg.go.dev/fmt) defines [GoStringer](https://pkg.go.dev/fmt#GoStringer) interface, and I think it doesn't have recognition it deserves. According to the documentation:

@@ -1,8 +1,6 @@
 ---
 title: "In search of better error handling for Go"
 date: 2023-06-22
-tags:
-  - golang
 ---
 
 This article is an exploration of how to improve error handling in Go. I address here some of the issues while others are left with open questions and some ideas. And, spoiler alert, I do love error handling in Go as it is now. I don't want to replace it with anything like exceptions, but I want to make it slightly better.

@@ -1,8 +1,6 @@
 ---
 title: "Go linters and formatters"
 date: 2020-11-11
-tags:
-  - golang
 ---
 
 ## Linters

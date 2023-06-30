@@ -1,7 +1,7 @@
 baseURL = "https://blog.orsinium.dev/"
 languageCode = "en-us"
 title = "Gram Publishing v2"
-paginate = "5"
+paginate = 40
 theme = "PaperMod"
 
 enableRobotsTXT = true
@@ -14,9 +14,7 @@ disableXML = true
 minifyOutput = false
 
 [params]
-env = "production # to enable google analytics, opengraph, twitter-cards and schema."
-title = "Gram Publishing v2"
-description = "ExampleSite description"
+env = "production"
 keywords = ["blog", "golang", "python", "elixir", "rust", "security"]
 # images = "["<link or path of image for opengraph, twitter-cards>"]"
 DateFormat = "2006-02-01"
@@ -46,22 +44,28 @@ appendFilePath = true
 
 [params.homeInfoParams]
 Title = "Hi, I'm Gram 👋"
-Content = "I write about 🐍 Python, 🏃 Go, 🧪 Elixir, 🦀 Rust, and some other software stuff"
+Content = "I write about 🐍 Python, 🏃 Go, 🧪 Elixir, 🦀 Rust, and some other software stuff."
 
 [[menu.main]]
-identifier = "golang"
-name = "🏃 golang"
-url = "/tags/golang/"
+identifier = "go"
+name = "🏃 go"
+url = "/go/"
 weight = "1"
 
 [[menu.main]]
+identifier = "py"
+name = "🐍 py"
+url = "/py/"
+weight = "2"
+
+[[menu.main]]
 identifier = "tags"
-name = "tags"
+name = "🏷 tags"
 url = "/tags/"
 weight = "10"
 
 [[menu.main]]
 identifier = "author"
-name = "author"
+name = "👋 author"
 url = "https://orsinium.dev"
 weight = "20"

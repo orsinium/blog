@@ -1,8 +1,6 @@
 ---
 title: "Work with JSON from Go and command line"
 date: 2019-03-08
-tags:
-  - golang
 ---
 
 ## Go standard library
