@@ -1,4 +1,6 @@
 ---
+title: "🐍 Python"
+hidemeta: true
 cascade:
   categories:
     - python

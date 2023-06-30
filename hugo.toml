@@ -49,13 +49,13 @@ Content = "I write about 🐍 Python, 🏃 Go, 🧪 Elixir, 🦀 Rust, and some 
 [[menu.main]]
 identifier = "go"
 name = "🏃 go"
-url = "/go/"
+url = "/posts/go/"
 weight = "1"
 
 [[menu.main]]
 identifier = "py"
 name = "🐍 py"
-url = "/py/"
+url = "/posts/py/"
 weight = "2"
 
 [[menu.main]]
