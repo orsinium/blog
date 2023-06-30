@@ -11,7 +11,7 @@ buildExpired = false
 
 [minify]
 disableXML = true
-minifyOutput = false
+minifyOutput = true
 
 [params]
 env = "production"
@@ -36,6 +36,14 @@ hidemeta = false
 hideSummary = true
 showtoc = true
 tocopen = false
+
+socialIcons = [
+    {name = "home",     url = "https://orsinium.dev/"},
+    {name = "rss",      url = "/index.xml"},
+    {name = "github",   url = "https://github.com/orsinium/"},
+    {name = "linkedin", url = "https://www.linkedin.com/in/orsinium/"},
+    {name = "telegram", url = "https://t.me/s/itgram_channel"},
+]
 
 [params.editPost]
 URL = "https://github.com/orsinium/blog/content"

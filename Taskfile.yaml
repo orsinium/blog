@@ -35,3 +35,10 @@ tasks:
       - install
     cmds:
       - ./bin/hugo server {{.CLI_ARGS}}
+
+  build:
+    desc: "Run dev server"
+    deps:
+      - install
+    cmds:
+      - ./bin/hugo {{.CLI_ARGS}}
