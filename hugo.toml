@@ -46,8 +46,8 @@ socialIcons = [
 ]
 
 [params.editPost]
-URL = "https://github.com/orsinium/blog/content"
-Text = "edit"
+URL = "https://github.com/orsinium/blog/blob/master/content/"
+Text = "source"
 appendFilePath = true
 
 [params.homeInfoParams]
