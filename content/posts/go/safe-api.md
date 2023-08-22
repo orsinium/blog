@@ -109,6 +109,8 @@ If you don't feel like copy-pasting this helper function into every project, you
 
 As a side note, `ContinueOnError` is a bad name. If you look at the source code of `Parse`, it parses flags one-by-one and it returns an error (or panics, or exits, depending on how you configure it) as soon as it encounters an error with a flag. So, it's not "continue on error" but rather "return on error".
 
+There is a lot more to say about safe erro handling. If you want to dive deeper in the topic, take a look at my blog post fully dedicated to the topic: [In search of better error handling for Go](https://blog.orsinium.dev/posts/go/monads/).
+
 ## Maps
 
 Here is another code snippet with a bug:
@@ -223,6 +225,34 @@ The solution is to make all side effects explicit. It's a bit more code but ever
 ```go
 cliff.MustParse(os.Stderr, os.Exit, os.Args, flags)
 ```
+
+## Value vs pointer receivers
+
+It is a valuable information for the caller code if the called method or function can have side-effects and not only return a result but also modify some values. However, there is no notion if mutability in Go, only pointers and values. If it's a pointer it can be modified, if it's a value, it can't. Because of that, I prefer to define methods on value receivers rather than pointer receivers:
+
+```go
+// Not good. We don't know if calling the method will modify the Flag or not.
+func (f *Flag) Validate() error
+
+// Better. We can be sure that the Flag is the same before and after calling Validate.
+func (f Flag) Validate() error
+```
+
+And more importantly, constructor methods should be explicit that they don't modify the original value:
+
+```go
+// Bad. Modifies the Flag in place, cannot be chained with other methods
+// and may cause nasty bugs for the users.
+func (f *Flag) WithName(name string)
+
+// Bad. May modify the flag in place or may not, we can't be sure.
+func (f *Flag) WithName(name string) *Flag
+
+// Better. We know for sure the original Flag is untouched.
+func (f Flag) WithName(name string) Flag
+```
+
+However, using value receivers may negatively affect performance (which you shouldn't optimize before you prove it's actually a bottleneck) and even cause bugs (which you should worry about). So, be careful with that. See the blog post [Should methods be declared on `T` or `*T`](https://dave.cheney.net/2016/03/19/should-methods-be-declared-on-t-or-t) by Dave Cheney.
 
 ## Limiting available methods
 
@@ -443,11 +473,71 @@ The problem with this approach is that now everything you put into struct field 
 
 ## Opaque types
 
-You may have a type that you want users to see in the documentation and be able to use in signatures of their functions. So you make this type public. The problem is that now the users can instantiate this type directly, bypassing your carefully crafted constructor.
+You may have a type that you want users to see in the documentation and be able to use in signatures of their functions. So you make this type public. The problem is that now the users can instantiate this type directly, bypassing your carefully crafted constructor. You can prevent this by checking in runtime a value of a private field that you know cannot be default:
+
+```go
+type Flag struct {name string}
+
+func NewFlag(name string) (*Flag, error) {
+  if name == "" {
+    return nil, errors.New("name is required")
+  }
+  return &Flag{name}, nil
+}
+
+func (f Flag) Parse() error {
+  if f.name == "" {
+    return errors.New("Flag must be constructed using NewFlag")
+  }
+  // ...
+}
+```
+
+If there are no private fields or all of them may have the default value, you can add a separate field just for this check:
+
+```go
+type Flag struct {
+  name     string
+  internal bool
+}
+
+func NewFlag(name string) (*Flag, error) {
+  return &Flag{name: name, internal: true}, nil
+}
+
+func (f Flag) Parse() error {
+  if !f.internal {
+    return errors.New("Flag must be constructed using NewFlag")
+  }
+  // ...
+}
+```
 
 ## Getters
 
-...
+If a struct has a field that you want users to be able to check but not modify, make it private and provide a getter method:
+
+```go
+type Flag struct {name string}
+
+func (f Flag) Name() string {
+  return f.name
+}
+```
+
+## It's ok to break rules
+
+There are lots of guidelines and guides on writing Go code: [Go Code Review Comments](https://github.com/golang/go/wiki/CodeReviewComments), [Go test comments](https://github.com/golang/go/wiki/TestComments), [Practical Go](https://dave.cheney.net/practical-go/presentations/gophercon-singapore-2019.html) by Dave Cheney, this blog post you almost finished reading, and so on. But these are merely recommendations. "[A Foolish Consistency is the Hobgoblin of Little Minds](https://peps.python.org/pep-0008/#a-foolish-consistency-is-the-hobgoblin-of-little-minds)" and you often can make for your project better decisions than any "fits all sizes" general suggestions.
+
+As an example, all built-in and stdlib functions return `(T, bool)` instead of `(T, error)` when there is only one error possible. A few examples:
+
+```go
+// false if the channel is closed
+val, more := <-ch
+
+// false if the value is not in the map
+val, exists := m[key]
+```
 
 ## Putting most of it together
 
