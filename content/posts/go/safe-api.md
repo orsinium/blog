@@ -1,5 +1,5 @@
 ---
-title: "Writing safe to use Go libraries"
+title: "Writing safe-to-use Go libraries"
 date: 2023-08-24
 ---
 
@@ -613,7 +613,7 @@ flags := func(c *Config) cliff.Flags {
 }
 
 // MustParse is like Parse but handles errors.
-//Side effects are explicit.
+// Side effects are explicit.
 config := cliff.MustParse(os.Stderr, os.Exit, os.Args, flags)
 fmt.Printf("%#v\n", config)
 ```
