@@ -525,6 +525,16 @@ func (f Flag) Name() string {
 }
 ```
 
+## Internal package
+
+Go team takes Go 1 compatibility promise seriously and expects the same from you. I recommend reading their blog post [Backward Compatibility, Go 1.21, and Go 2](https://go.dev/blog/compat) that covers some of the techniques they use to achieve this and you may use too. Your library cannot be considered safe to use if it breaks with every release all projects using it.
+
+I think the best advice for keeping backward compatibility is to make public only what actually needs to be public for the users to be able to use the package and nothing else. Here is some tips how to do that:
+
+1. Run [pkgsite](https://pkg.go.dev/golang.org/x/pkgsite/cmd/pkgsite) locally to check the project documentation and, by extend, what's avaiable to your users.
+1. Place in the [internal](https://go.dev/doc/go1.4#internalpackages) package everything that needs to be available in your project to all packages but not to the users.
+1. Prefer defining tests in a package with `_test` suffix ([the docs](https://pkg.go.dev/testing) call it "black box" testing) so that you can see and use your package as your users would. That's how you now that the public API is sufficient.
+
 ## It's ok to break rules
 
 There are lots of guidelines and guides on writing Go code: [Go Code Review Comments](https://github.com/golang/go/wiki/CodeReviewComments), [Go test comments](https://github.com/golang/go/wiki/TestComments), [Practical Go](https://dave.cheney.net/practical-go/presentations/gophercon-singapore-2019.html) by Dave Cheney, this blog post you almost finished reading, and so on. But these are merely recommendations. "[A Foolish Consistency is the Hobgoblin of Little Minds](https://peps.python.org/pep-0008/#a-foolish-consistency-is-the-hobgoblin-of-little-minds)" and you often can make for your project better decisions than any "fits all sizes" general suggestions.
@@ -538,6 +548,36 @@ val, more := <-ch
 // false if the value is not in the map
 val, exists := m[key]
 ```
+
+However, when designing API for [genesis](https://github.com/life4/genesis), I made the decision to return from functions like [slices.Min](https://pkg.go.dev/github.com/life4/genesis/slices#Min) an `error` instead of `bool` if the given slice is empty:
+
+```go
+val, err := slices.Min(slice)
+```
+
+Checking `if err != nil` is a bit more verbose than just `if !ok` but that gives a few advantages:
+
+1. Users can easily add a bit more verbosity to make it apparent what exactly happened:
+
+    ```go
+    if err == slices.ErrEmpty
+    ```
+
+1. Most often, users will want to return from their function on failure, and with this API they can use the returned error directly instead of making their own:
+
+    ```go
+    return err
+    ```
+
+1. It can be combined with [lambdas.Must](https://pkg.go.dev/github.com/life4/genesis/lambdas#Must) when we know that the input slice is never empty:
+
+    ```go
+    val := lambdas.Must(slices.Min(slice))
+    ```
+
+1. It can be extended to return other errors without breaking the API. You should be careful with it, though, the old code might not properly handle these new potential errors.
+
+While these are all small things, small things do matter when it comes to designing packages for others to use.
 
 ## Putting most of it together
 
