@@ -1,6 +1,6 @@
 ---
 title: "Writing safe to use Go libraries"
-date: 2023-06-22
+date: 2023-08-24
 ---
 
 The Go standard library is full of bad design choices from the perspective of safety of use. A prime example of that is the blog post [Aiming for correctness with types](https://fasterthanli.me/articles/aiming-for-correctness-with-types#let-s-talk-about-http-headers) by fasterthanlime. It, among other things, compares the Go stdlib [http](https://pkg.go.dev/net/http) package to a third-party Rust [hyper](https://github.com/hyperium/hyper) library. And while some parts that the author covers are due to the nature of Go as a language, most of them, I believe, are a bad design of the specific library and can be fixed without rewriting everything to Rust.
