@@ -535,6 +535,16 @@ I think the best advice for keeping backward compatibility is to make public onl
 1. Place in the [internal](https://go.dev/doc/go1.4#internalpackages) package everything that needs to be available in your project to all packages but not to the users.
 1. Prefer defining tests in a package with `_test` suffix ([the docs](https://pkg.go.dev/testing) call it "black box" testing) so that you can see and use your package as your users would. That's how you now that the public API is sufficient.
 
+## Concurrency
+
+Writing safe concurrent functions deserves a blog post of its own, so I'll simply list some of the most important rules:
+
+1. If a function creates a channel, reads from a channel, starts a goroutine, or does IO-bound opertaions (like sending HTTP requests or even reading a potentially big file), this function should accept a [context.Context](https://pkg.go.dev/context#Context) instance as its first argument and use it in all such places.
+1. If a function creates a channel, the same function or a goroutine it starts should close the channel when it's done writing in it. If you don't follow this rule, you may try to write into a closed channel or close a channel twice, and then it will panic.
+1. In general, always make sure that a started goroutine can be stopped and a created channel can be closed.
+1. Avoid buffered channels, they may hide race conditions and usually won't add performance to the system overall.
+1. "Leave concurrency to the caller". Avoid starting goroutines is you can. If the caller code wants your function to be executed concurrently, they can run it in a goroutine themselves.
+
 ## It's ok to break rules
 
 There are lots of guidelines and guides on writing Go code: [Go Code Review Comments](https://github.com/golang/go/wiki/CodeReviewComments), [Go test comments](https://github.com/golang/go/wiki/TestComments), [Practical Go](https://dave.cheney.net/practical-go/presentations/gophercon-singapore-2019.html) by Dave Cheney, this blog post you almost finished reading, and so on. But these are merely recommendations. "[A Foolish Consistency is the Hobgoblin of Little Minds](https://peps.python.org/pep-0008/#a-foolish-consistency-is-the-hobgoblin-of-little-minds)" and you often can make for your project better decisions than any "fits all sizes" general suggestions.
