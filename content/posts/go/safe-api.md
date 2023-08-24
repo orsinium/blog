@@ -153,7 +153,7 @@ type Usage string
 func StringVar(tar *string, name Name, def string, usage Usage)
 ```
 
-With this signature, the example above will produce a type error because we try to pass a `string` variable where type `Usage` is expected. And since constants and literals in Go are untyped, the correct order will work without any type casting:
+With this signature, the example above will produce a type error because we try to pass a `string` variable where the type `Usage` is expected. And since constants and literals in Go are untyped, the correct order will work without any type casting:
 
 ```go
 f.StringVar(&addr, "addr", addr, "address to listen on")
@@ -171,7 +171,7 @@ If you want to be 100% sure users can't mess it up, you can always make these ty
 An interesting application for this technique is a wrapper for [sql.DB.Exec](https://pkg.go.dev/database/sql#DB.Exec) that makes sure users don't pass untrusted input as an SQL query (unless explicitly marked as Safe):
 
 ```go
-type safe string
+// type-safe string
 func (*DB) Exec(query Safe, args ...any) (Result, error)
 ```
 
@@ -186,7 +186,7 @@ f.StringVar(&addr, "addr", "127.0.0.1:8080", "address to listen on")
 _ = flag.Parse()
 ```
 
-What happens is we called `flag.Parse` instead of `f.Parse`. And that's easy to miss because the names are almost the same. This compiles because the flag package maintains a global FlagSet instance and provides wrapper functions for each of its methods. And that's the API that the documentation suggests using. Why? I don't know! Maybe because `f := flag.NewFlagSet("", flag.ExitOnError)` is too hard to type. What I do know is that it leads to unexpected bugs and makes it very hard to test. Because [global state is evil](https://softwareengineering.stackexchange.com/questions/148108/why-is-global-state-so-evil). The solution is simple: don't use a global state.
+What happens is we called `flag.Parse` instead of `f.Parse`. And that's easy to miss because the names are almost the same. This compiles because the flag package maintains a global FlagSet instance and provides wrapper functions for each of its methods. And that's the API that the documentation suggests using. Why? I don't know! Maybe because `f := flag.NewFlagSet("", flag.ExitOnError)` is too hard to type. What I do know is that it leads to unexpected bugs and makes it very hard to test. Because [the global state is evil](https://softwareengineering.stackexchange.com/questions/148108/why-is-global-state-so-evil). The solution is simple: don't use a global state.
 
 ```go
 f := flag.NewFlagSet("", flag.ExitOnError)
@@ -206,7 +206,7 @@ if err == ErrHelp {
 return 2, err
 ```
 
-Fact: if an error occurs, flag will print the into the specified output regardless of what behavior on error you specified. But pflag will print the error only if `ExitOnError` is specified. So, despite pflag being a "drop-in replacement for flag", you'll need to add `fmt.Fprintln` or similar in the snippet above before the last return when using pflag.
+Fact: if an error occurs, flag will print into the specified output regardless of what behavior on the error you specified. But pflag will print the error only if `ExitOnError` is specified. So, despite pflag being a "drop-in replacement for flag", you'll need to add `fmt.Fprintln` or similar in the snippet above before the last return when using pflag.
 
 Perhaps, that's a lot to ask from the user. Any line of code you ask them to write themselves means more room for potential errors. The solution is to make a function that can handle errors, and make it possible to override the `os.Exit` callback for that function:
 
@@ -216,9 +216,9 @@ flag.HandleError(err, os.Exit)
 // (or a different callback in tests)
 ```
 
-Another question is how to redefine `os.Stderr`. The FLagSet provide a [SetOutput](https://pkg.go.dev/flag#FlagSet.SetOutput) method for that. Bonus fact: pflag ignores the output you set here if you specify `ExitOnError` and always writes the error into `os.Stdout`.
+Another question is how to redefine `os.Stderr`. The FLagSet provides a [SetOutput](https://pkg.go.dev/flag#FlagSet.SetOutput) method for that. Bonus fact: pflag ignores the output you set here if you specify `ExitOnError` and always writes the error into `os.Stdout`.
 
-I think the problem with `SetOutput` is that it's hiddent somewhere deep in the docs. It's not mantioned in the package documentation and it's not apparent from the package APi that it's here. Plus, you can't expect your users to read the documentation beyond the first code example. And lastly, if you read code that doesn't use it, it's not obvious for you, as a code reviewer, that there is a side-effect.
+I think the problem with `SetOutput` is that it's hidden somewhere deep in the docs. It's not mentioned in the package documentation and it's not apparent from the package APi that it's here. Plus, you can't expect your users to read the documentation beyond the first code example. And lastly, if you read code that doesn't use it, it's not obvious to you, as a code reviewer, that there is a side effect.
 
 The solution is to make all side effects explicit. It's a bit more code but everyone knows that side-effects are there and how to redefine them in tests:
 
@@ -228,7 +228,7 @@ cliff.MustParse(os.Stderr, os.Exit, os.Args, flags)
 
 ## Value vs pointer receivers
 
-It is a valuable information for the caller code if the called method or function can have side-effects and not only return a result but also modify some values. However, there is no notion if mutability in Go, only pointers and values. If it's a pointer it can be modified, if it's a value, it can't. Because of that, I prefer to define methods on value receivers rather than pointer receivers:
+It is valuable information for the caller code if the called method or function can have side effects and not only return a result but also modify some values. However, there is no notion of mutability in Go, only pointers and values. If it's a pointer it can be modified, if it's a value, it can't. Because of that, I prefer to define methods on value receivers rather than pointer receivers:
 
 ```go
 // Not good. We don't know if calling the method will modify the Flag or not.
@@ -291,7 +291,7 @@ for i := 0; i < 10; i++ {
 cancel()
 ```
 
-Another possible solution would be to make `WithContext` return a private type that has the `Cancel` method but don't include this method into the `Context` interface so that it cannot be canceled from child functions:
+Another possible solution would be to make `WithContext` return a private type that has the `Cancel` method but not include this method into the `Context` interface so that it cannot be canceled from child functions:
 
 ```go
 // WithCancel now returns a private type context
@@ -314,7 +314,7 @@ for i := 0; i < 10; i++ {
 subctx.Cancel()
 ```
 
-I'd prefer this solution because modifying an object through its method seems more intuitive to me than codifying it through a separate callback returned by its constructor. However, using this API would be more difficult in certain scenarios becuase the context package also has a few other constructors (or better say, wrappers): [WithDeadline](https://pkg.go.dev/context#WithDeadline) and [WithTimeout](https://pkg.go.dev/context#WithTimeout). So, in the following code you loose access to the `Cancel` method:
+I'd prefer this solution because modifying an object through its method seems more intuitive to me than codifying it through a separate callback returned by its constructor. However, using this API would be more difficult in certain scenarios because the context package also has a few other constructors (or better say, wrappers): [WithDeadline](https://pkg.go.dev/context#WithDeadline) and [WithTimeout](https://pkg.go.dev/context#WithTimeout). So, in the following code, you lose access to the `Cancel` method:
 
 ```go
 ctx = context.WithCancel(ctx)
@@ -327,7 +327,7 @@ ctx.Cancel()
 
 ## Generics
 
-Generics are great for writing clean and safe packages. The main application for it is to establish relation between variables used by different methods or parameters of the same function. For example, here is a type safe version of [sync.Pool](https://pkg.go.dev/sync#Pool):
+Generics are great for writing clean and safe packages. The main application for it is to establish a relation between variables used by different methods or parameters of the same function. For example, here is a type-safe version of [sync.Pool](https://pkg.go.dev/sync#Pool):
 
 ```go
 type Pool[T any] struct {
@@ -356,9 +356,9 @@ type c Config
 err := json.Unmarshal(someData, c)
 ```
 
-The Unmarshal method must accept a pointer to the target as the second argument, not a value. And since the its type is `any`, type checker won't say anything. While [go vet](https://pkg.go.dev/cmd/vet) can catch this bug for JSON, it won't say anything for YAML, TOML, XML, and countless other third-party serialization libraries.
+The Unmarshal method must accept a pointer to the target as the second argument, not a value. And since its type is `any`, the type checker won't say anything. While [go vet](https://pkg.go.dev/cmd/vet) can catch this bug for JSON, it won't say anything for YAML, TOML, XML, and countless other third-party serialization libraries.
 
-So, what to do? You can't annotate it as `*any` because [pointer to interface is not interface](https://stackoverflow.com/a/44372954). The solutions is generics:
+So, what to do? You can't annotate it as `*any` because [pointer to interface is not interface](https://stackoverflow.com/a/44372954). The solution is generics:
 
 ```go
 func Unmarshal[T any](data []byte, v *T) error
@@ -366,7 +366,7 @@ func Unmarshal[T any](data []byte, v *T) error
 
 ## Constraints for generics
 
-One detail we glossed over above is that flag and pflag don't support arbitrary types as flags, only specific ones. We lost this information in our generic implementation. The solution is to replace the type constraint `any` by a more specific one. And the great news is that Go supports union types for generic constraints:
+One detail we glossed over above is that flag and pflag don't support arbitrary types as flags, only specific ones. We lost this information in our generic implementation. The solution is to replace the type constraint `any` with a more specific one. And the great news is that Go supports union types for generic constraints:
 
 ```go
 type Constraint interface {
@@ -376,13 +376,13 @@ type Constraint interface {
 func VarP[T Constraint](p *T, name, shorthand string, value T, usage string)
 ```
 
-Now if the user tries to pass an unsupported type like context.Context, they will get an error from type checker. Probably, you still have to have unsafe hacks inside the function until the [type switch on parametric types](https://github.com/golang/go/issues/45380) proposal is accepted, but I believe that for public libraries API type safety is worth a bit of a mess in the internal implementation.
+Now if the user tries to pass an unsupported type like context.Context, they will get an error from the type checker. Probably, you still have to have unsafe hacks inside the function until the [type switch on parametric types](https://github.com/golang/go/issues/45380) proposal is accepted, but I believe that for public libraries API type safety is worth a bit of a mess in the internal implementation.
 
 Generic constraints are especially useful for math libraries to support any numeric types as the input (unlike the stdlib [math](https://pkg.go.dev/math) which only works with float64). For example, the [maths](https://github.com/theriault/maths) package. The numeric generic constraints are available in the [golang.org/x/exp/constraints](https://pkg.go.dev/golang.org/x/exp/constraints) package. Hopefully, one day it will make its way into stdlib. Until then, use that package or simply copy-paste the constraints you need because [a little copying is better than a little dependency](https://go-proverbs.github.io/).
 
 ## Generics beyond type safety
 
-Generics can be used to prevent not only type errors that will explode in runtime but also some logical errors. For example, I'm currently working on a type safe SQL query builder for Go, and it uses generics a lot. For example, this is how you can construct a `CREATE TABLE` query:
+Generics can be used to prevent not only type errors that will explode in runtime but also some logical errors. For example, I'm currently working on a type-safe SQL query builder for Go, and it uses generics a lot. For example, this is how you can construct a `CREATE TABLE` query:
 
 ```go
 type Place struct {
@@ -394,7 +394,7 @@ schema := qb.CreateTable(&p,
 )
 ```
 
-The magic of generics is how it ensures that the database column type you use is compatible with the struct field in your code associated with the column. Here is how signatures look like:
+The magic of generics is how it ensures that the database column type you use is compatible with the struct field in your code associated with the column. Here is what signatures look like:
 
 ```go
 func Text() ColumnType[string]
@@ -420,9 +420,9 @@ app := &cli.App{
 }
 ```
 
-The big advantage ofthis approach is that it's apparent what is name, waht is default value, and what is usage, while, as we discussed earlier, with a constructor function it's easy to mess up the arguments order. Also, some optional arguments can be easily omitted to have less visual noise.
+The big advantage of this approach is that it's apparent what is name, what is the default value, and what is usage, while, as we discussed earlier, with a constructor function it's easy to mess up the arguments' order. Also, some optional arguments can be easily omitted to have less visual noise.
 
-The big disadvantage, however, is that some arguments (`Name` and, in our case, `Destination`) are required for this to work but with structs can be omitted and type checker won't say a word.
+The big disadvantage, however, is that some arguments (`Name` and, in our case, `Destination`) are required for this to work but with structs can be omitted and the type checker won't say a word.
 
 That's why we use a constructor function. However, you'll often have a mix of both: some arguments are required and some are optional. Go doesn't have optional function arguments, and how to work it around is a whole new topic. In short, your options are:
 
@@ -446,11 +446,11 @@ That's why we use a constructor function. However, you'll often have a mix of bo
   F(&addr, "addr").Deprecated("use --host and --port instead")
   ```
 
-The first option is unnecessary verbose when you don't want to change anything in the Config (you wtill have to pass `Config{}`), the seconds is verbose when you do provide some options. So I usually prefer the third option but which one to pick is a matter of taste and specifics of your API.
+The first option is unnecessarily verbose when you don't want to change anything in the Config (you will have to pass `Config{}`), and the second is verbose when you do provide some options. So I usually prefer the third option but which one to pick is a matter of taste and specifics of your API.
 
 ## Field tags
 
-With flag and pflag, for each flag we need to type its name at least 3 times: as struct field name, as value target, and as flag name. It's not just tedious but also error-prone. We already showed earlier how to avoid duplicate flag names (which still doesn't prevent from typos) but we still can have multiple flags pointing to the same struct field.
+With flag and pflag, for each flag we need to type its name at least 3 times: as struct field name, as value target, and as flag name. It's not just tedious but also error-prone. We already showed earlier how to avoid duplicate flag names (which still doesn't prevent typos) but we still can have multiple flags pointing to the same struct field.
 
 A solution for the problem is to avoid code duplication with [reflection](https://pkg.go.dev/reflect). Then the user types the field name and type only once and the rest is magically inferred from this. This is the approach that is used by [clap](https://github.com/clap-rs/clap) in Rust (the most popular Rust CLI library), and by [kong](https://github.com/alecthomas/kong) in Go:
 
@@ -469,7 +469,7 @@ var CLI struct {
 }
 ```
 
-The problem with this approach is that now everything you put into struct field tags is not type safe, not autocompleted, not documented, and even the syntax is not checked. In other words, it's just along raw string that gets parsed only in runtime. This will get better when and if the [introduce structured tags](https://github.com/golang/go/issues/23637) RFC is accepted. until then, this approach with reflection is only good if you don't rely on struct tags too much.
+The problem with this approach is that now everything you put into struct field tags is not type-safe, not autocompleted, not documented, and even the syntax is not checked. In other words, it's just along raw string that gets parsed only in runtime. This will get better when and if the [introduce structured tags](https://github.com/golang/go/issues/23637) RFC is accepted. Until then, this approach with reflection is only good if you don't rely on struct tags too much.
 
 ## Opaque types
 
@@ -527,23 +527,23 @@ func (f Flag) Name() string {
 
 ## Internal package
 
-Go team takes Go 1 compatibility promise seriously and expects the same from you. I recommend reading their blog post [Backward Compatibility, Go 1.21, and Go 2](https://go.dev/blog/compat) that covers some of the techniques they use to achieve this and you may use too. Your library cannot be considered safe to use if it breaks with every release all projects using it.
+The Go team takes the Go 1 compatibility promise seriously and expects the same from you. I recommend reading their blog post [Backward Compatibility, Go 1.21, and Go 2](https://go.dev/blog/compat) that covers some of the techniques they use to achieve this and you may use too. Your library cannot be considered safe to use if it breaks with every release all projects using it.
 
-I think the best advice for keeping backward compatibility is to make public only what actually needs to be public for the users to be able to use the package and nothing else. Here is some tips how to do that:
+I think the best advice for keeping backward compatibility is to make public only what actually needs to be public for the users to be able to use the package and nothing else. Here are some tips on how to do that:
 
-1. Run [pkgsite](https://pkg.go.dev/golang.org/x/pkgsite/cmd/pkgsite) locally to check the project documentation and, by extend, what's avaiable to your users.
+1. Run [pkgsite](https://pkg.go.dev/golang.org/x/pkgsite/cmd/pkgsite) locally to check the project documentation and, by extent, what's available to your users.
 1. Place in the [internal](https://go.dev/doc/go1.4#internalpackages) package everything that needs to be available in your project to all packages but not to the users.
-1. Prefer defining tests in a package with `_test` suffix ([the docs](https://pkg.go.dev/testing) call it "black box" testing) so that you can see and use your package as your users would. That's how you now that the public API is sufficient.
+1. Prefer defining tests in a package with `_test` suffix ([the docs](https://pkg.go.dev/testing) call it "black box" testing) so that you can see and use your package as your users would. That's how you know that the public API is sufficient.
 
 ## Concurrency
 
 Writing safe concurrent functions deserves a blog post of its own, so I'll simply list some of the most important rules:
 
-1. If a function creates a channel, reads from a channel, starts a goroutine, or does IO-bound opertaions (like sending HTTP requests or even reading a potentially big file), this function should accept a [context.Context](https://pkg.go.dev/context#Context) instance as its first argument and use it in all such places.
+1. If a function creates a channel, reads from a channel, starts a goroutine, or does IO-bound operations (like sending HTTP requests or even reading a potentially big file), this function should accept a [context.Context](https://pkg.go.dev/context#Context) instance as its first argument and use it in all such places.
 1. If a function creates a channel, the same function or a goroutine it starts should close the channel when it's done writing in it. If you don't follow this rule, you may try to write into a closed channel or close a channel twice, and then it will panic.
 1. In general, always make sure that a started goroutine can be stopped and a created channel can be closed.
 1. Avoid buffered channels, they may hide race conditions and usually won't add performance to the system overall.
-1. "Leave concurrency to the caller". Avoid starting goroutines is you can. If the caller code wants your function to be executed concurrently, they can run it in a goroutine themselves.
+1. "Leave concurrency to the caller". Avoid starting goroutines if you can. If the caller code wants your function to be executed concurrently, they can run it in a goroutine themselves.
 
 ## It's ok to break rules
 
@@ -591,7 +591,7 @@ While these are all small things, small things do matter when it comes to design
 
 ## Putting most of it together
 
-I've started this blog post by saying that most of the techniques described here are used in [cliff](https://github.com/orsinium-labs/cliff) to make a safe to use wrapper around flag nad pflag. So, if you are curious, here is how it all plays together:
+I've started this blog post by saying that most of the techniques described here are used in [cliff](https://github.com/orsinium-labs/cliff) to make a safe-to-use wrapper around flag and pflag. So, if you are curious, here is how it all plays together:
 
 ```go
 type Config struct {
@@ -613,7 +613,7 @@ flags := func(c *Config) cliff.Flags {
 }
 
 // MustParse is like Parse but handles errors.
-// Side-effects are explicit.
+//Side effects are explicit.
 config := cliff.MustParse(os.Stderr, os.Exit, os.Args, flags)
 fmt.Printf("%#v\n", config)
 ```
