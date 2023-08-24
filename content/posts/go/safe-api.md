@@ -3,11 +3,11 @@ title: "Writing safe to use Go libraries"
 date: 2023-06-22
 ---
 
-The Go standard library is full of bad design choice from the perspective of safety of use. A prime example of that is the blog post [Aiming for correctness with types](https://fasterthanli.me/articles/aiming-for-correctness-with-types#let-s-talk-about-http-headers) by fasterthanlime. It, among other things, compares the Go stdlib [http](https://pkg.go.dev/net/http) package to a third-party Rust [hyper](https://github.com/hyperium/hyper) library. And while some parts that the author covers are due to nature of Go as a language, most of them, I believe, are a bad design of the specific library and can be fixed without rewriting everything to Rust.
+The Go standard library is full of bad design choices from the perspective of safety of use. A prime example of that is the blog post [Aiming for correctness with types](https://fasterthanli.me/articles/aiming-for-correctness-with-types#let-s-talk-about-http-headers) by fasterthanlime. It, among other things, compares the Go stdlib [http](https://pkg.go.dev/net/http) package to a third-party Rust [hyper](https://github.com/hyperium/hyper) library. And while some parts that the author covers are due to the nature of Go as a language, most of them, I believe, are a bad design of the specific library and can be fixed without rewriting everything to Rust.
 
-I don't think that Go core team isn't smart, quite the opposite. The shortcomings of the stdlib often the result of some features being missed in the language at the time (and because of Go 1 compatibility promise, these workarounds are here to stay forever), some are sacrifices for the sake of simplicity or flexibility.
+I don't think that the Go core team isn't smart, quite the opposite. The shortcomings of the stdlib are often the result of some features being missing in the language at the time (and because of the Go 1 compatibility promise, these workarounds are here to stay forever), and some are sacrifices for the sake of simplicity or flexibility.
 
-Today's case study is stdlib [flag](https://pkg.go.dev/flag) and its third-party sibling [pflag](https://github.com/spf13/pflag). I've made quite a few CLI tool using them ([enc](https://github.com/life4/enc) and [sourcemap](https://github.com/orsinium-labs/sourcemap), to name a few), and made quite a few mistakes along the way. And each time I make a mistake, I write a note on it and think how I could prevent it in the future. In this particular case, the outcome of these notes is the [cliff](https://github.com/orsinium-labs/cliff) library and this blog post covering the tricks I used to make this library safe to use.
+Today's case study is stdlib [flag](https://pkg.go.dev/flag) and its third-party sibling [pflag](https://github.com/spf13/pflag). I've made quite a few CLI tools using them ([enc](https://github.com/life4/enc) and [sourcemap](https://github.com/orsinium-labs/sourcemap), to name a few), and made quite a few mistakes along the way. And each time I make a mistake, I write a note on it and think how I could prevent it in the future. In this particular case, the outcome of these notes is the [cliff](https://github.com/orsinium-labs/cliff) library and this blog post covering the tricks I used to make this library safe to use.
 
 ## Scoping
 
@@ -20,7 +20,7 @@ f.StringVar(&addr, "addr", "127.0.0.1:8080", "address to listen on")
 http.ListenAndServe(addr, handler)
 ```
 
-We define flags but we never parse them because `f.Parse` call is missed. And everything compiles just fine and doesn't even crash in runtime because all variables we need are already defined and we can use them. Except that if we try actually passing CLI flags into our tool, it won't have any effect.
+We define flags but we never parse them because `f.Parse` call is missed. Everything compiles just fine and doesn't even crash in runtime because all variables we need are already defined and we can use them. Except, if we try actually passing CLI flags into our tool, it won't have any effect.
 
 The solution is scoping. We need to make sure that flags cannot be defined without parsing them:
 
@@ -30,7 +30,7 @@ err := Parse(func(f *flag.FlagSet) {
 })
 ```
 
-We still can use addr before the flags are even defined, though. And I've seen this happening in some production services defining too many flags in a too complex manner. So, an even better solution is to make sure that none of the variables are available in the scope before flags are parsed:
+We still can use addr before the flags are even defined, though. I've seen this happening in some production services defining too many flags in a too complex manner. So, an even better solution is to make sure that none of the variables are available in the scope before flags are parsed:
 
 ```go
 type Config struct {
@@ -57,7 +57,7 @@ _ = f.Parse(os.Args[1:])
 
 We can ignore the returned error because `flag.ExitOnError` says that `Parse` will never return an error. It either succeeds or exits the whole app.
 
-The problem here is that we have an argument passed in one function that defines how another function works. And these function can be called many lines apart or even in different files. So, when someone changes it in one place, the compiler and [errcheck](https://github.com/kisielk/errcheck) won't tell you anything:
+The problem here is that we have an argument passed in one function that defines how another function works. These functions can be called many lines apart or even in different files. So, when someone changes it in one place, the compiler and [errcheck](https://github.com/kisielk/errcheck) won't tell you anything:
 
 ```go
 f := flag.NewFlagSet("", flag.ContinueOnError)
@@ -86,7 +86,7 @@ err := f.Parse(os.Args[1:])
 
 Now, if we change the behavior, the method signature also changes.
 
-It's a common practice to provide a `Must` method for functions that are used at the entry level or init time of the app. For example, [regexp.Compile](https://pkg.go.dev/regexp#Compile) is complemented by [regexp.MustCompile](https://pkg.go.dev/regexp#MustCompile). However, it may be tedious to maintain, especially if you have lots of such functions. So, generics to the rescue:
+It's a common practice to provide a `Must` method for functions that are used at the entry-level or init time of the app. For example, [regexp.Compile](https://pkg.go.dev/regexp#Compile) is complemented by [regexp.MustCompile](https://pkg.go.dev/regexp#MustCompile). However, it may be tedious to maintain, especially if you have lots of such functions. So, generics to the rescue:
 
 ```go
 func Must[T any](val T, err error) T {
@@ -107,9 +107,9 @@ It works because Go has a special hack for unpacking multiple return values into
 
 If you don't feel like copy-pasting this helper function into every project, you can use the one defined in [genesis](https://github.com/life4/genesis): [lambdas.Must](https://pkg.go.dev/github.com/life4/genesis/lambdas#Must).
 
-As a side note, `ContinueOnError` is a bad name. If you look at the source code of `Parse`, it parses flags one-by-one and it returns an error (or panics, or exits, depending on how you configure it) as soon as it encounters an error with a flag. So, it's not "continue on error" but rather "return on error".
+As a side note, `ContinueOnError` is a bad name. If you look at the source code of `Parse`, it parses flags one by one and it returns an error (or panics, or exits, depending on how you configure it) as soon as it encounters an error with a flag. So, it's not "continue on error" but rather "return on error".
 
-There is a lot more to say about safe erro handling. If you want to dive deeper in the topic, take a look at my blog post fully dedicated to the topic: [In search of better error handling for Go](https://blog.orsinium.dev/posts/go/monads/).
+There is a lot more to say about safe error handling. If you want to dive deeper into the topic, take a look at my blog post fully dedicated to the topic: [In search of better error handling for Go](https://blog.orsinium.dev/posts/go/monads/).
 
 ## Maps
 
@@ -131,11 +131,11 @@ f := cliff.Flags{
 
 A nice bonus is that all map values will be vertically aligned by the `go fmt`, so it's also easier to read.
 
-One thing to keep in mind here is that now the order of flags is non-deterministic and may change between runs. In case of CLI flags, it may matter when showing a help message. Easy solution is to sort the flags by the name internally. But if you want to preserve the order in which they are defined, you can do the trick that Django ORM used in the times of Python 2: have a global counter and increment it and store its current value on each call to the flag constructor. "host" flag will have counter value 1, "port" will have 2 and so on, in the order as they are defined in the code. And then use this counter to sort the flags.
+One thing to keep in mind here is that now the order of flags is non-deterministic and may change between runs. In the case of CLI flags, it may matter when showing a help message. The easy solution is to sort the flags by the name internally. But if you want to preserve the order in which they are defined, you can do the trick that Django ORM used in the times of Python 2: have a global counter, increment it, and store its current value on each call to the flag constructor. "host" flag will have counter value 1, "port" will have 2 and so on, in the order as they are defined in the code. Then use this counter to sort the flags.
 
 ## Custom types
 
-Can you sport a bug here?
+Can you spot a bug here?
 
 ```go
 addr := os.Getenv("ADDR")
