@@ -256,11 +256,11 @@ However, using value receivers may negatively affect performance (which you shou
 
 ## Limiting available methods
 
-And now something completely different. Let's take the following code that has a bug in how it uses [context](https://pkg.go.dev/context) for cancelation:
+And now something completely different. Let's take the following code that has a bug in how it uses a potential API of the [context](https://pkg.go.dev/context) package (we'll call this potential package `myctx` to avoid confusion) for cancelation:
 
 ```go
 func supervisor() {
-  ctx := context.Background()
+  ctx := myctx.NewContext()
   for i := 0; i < 10; i++ {
     actor(ctx, i)
   }
@@ -268,14 +268,14 @@ func supervisor() {
   ctx.Cancel()
 }
 
-func actor(ctx context.Context, i int) {
+func actor(ctx myctx.Context, i int) {
   subtask(ctx, i)
   // wait for some event to occur
   // ...
   ctx.Cancel()
 }
 
-func subtask(ctx context.Context, i int)
+func subtask(ctx myctx.Context, i int)
 ```
 
 What happens is the supervisor starts multiple actors with the same context so that it can cancel it when it needs to. The problem is that each actor also starts a subtask and uses the same context for it. That means, when any of the actors cancels its subtask, it also implicitly cancels all other actors because they all share the same context.
