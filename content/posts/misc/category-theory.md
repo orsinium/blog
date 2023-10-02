@@ -41,6 +41,37 @@ A category is formed by two sorts of things: **objects** and **morphisms** (also
 
 ...
 
+## Cheat sheet
+
+A category consists of:
+
+* objects
+* morphisms (arrows)
+* composition of morphisms: if `g: A -> B` & `f: B -> C` then `f . g: A -> C`
+
+Category laws:
+
+* Associativity: `f . (g . h) = (f . g) . h`
+* Every object has identity morphism: `g . id = id . g = g`
+
+Not all arrows are the same:
+
+* Monomorphism: no two elements of A are mapped to the same element in B (injective).
+* Epimorphism: for every element in B, there is at least element in A mapped to it (surjective).
+* Isomorphism: `g . f = id` & `f . g = id`
+
+There are some special objects:
+
+* Initial object: has exactly one morphism to every object. Void.
+* Terminal object: has exactly one morphism from every object. Unit.
+
+More interesting patterns:
+
+* Product (tuple): `p . m = p'` & `q . m = q'`
+* Sum (union)
+
+Functor: mapping of all elements from category to another category that preserves the structure: maps all objects and morphisms and has the same composition (`F(g . f) = Fg . Ff`).
+
 ## Summary
 
 Here is a summarized mapping between the models:
