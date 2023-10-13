@@ -1,6 +1,0 @@
-.pytest_cache/
-*-checkpoint.ipynb
-*.bin
-/snippets/reddit.ipynb
-/tmp.py
-*.gz
