@@ -1,21 +1,21 @@
 ---
 title: "Diving into PyPI package name squatting"
-date: 2023-10-13
+date: 2023-11-09
 tags:
   - python
 ---
 
-All sufficiently big public package registries are a mess full of malware, name squatting and drama:
+All sufficiently big public package registries are a mess full of malware, name squatting, and drama:
 
 * [crates.io](https://crates.io/) has [a single user](https://crates.io/users/swmon) owning names like "any", "bash", and "class".
 * [npmjs.com](https://www.npmjs.com/) had a [drama with left-pad](https://en.wikipedia.org/wiki/Npm#Dependency_chain_issues) when a single maintainer of a single one-liner package broke the internet.
-* [pypi.org](https://pypi.org/) appears in tech news monthly with another group of researches discovering another malware campaign.
+* [pypi.org](https://pypi.org/) appears in tech news monthly with another group of researchers discovering another malware campaign.
 
-Today PyPI malware [made news yet again](https://arstechnica.com/security/2023/11/developers-targeted-with-malware-that-monitors-their-every-move/), so I decided to take look at the other side of PyPI: name squatting and some other interesting stats along the way.
+Today PyPI malware [made news yet again](https://arstechnica.com/security/2023/11/developers-targeted-with-malware-that-monitors-their-every-move/), so I decided to take a look at the other side of PyPI: name squatting and some other interesting stats along the way.
 
 ## Get the data
 
-We could manually try random package names and check their owner but there is a better way. [Seth Michael Larson](https://sethmlarson.dev/), the [Security Developer-in-Residence at the Python Software Foundation](https://pyfound.blogspot.com/2023/06/announcing-our-new-security-developer.html) has a public repository [pypi-data](https://github.com/sethmlarson/pypi-data) with a partiual dump of the PyPI database.
+We could manually try random package names and check their owner but there is a better way. [Seth Michael Larson](https://sethmlarson.dev/), the [Security Developer-in-Residence at the Python Software Foundation](https://pyfound.blogspot.com/2023/06/announcing-our-new-security-developer.html) has a public repository [pypi-data](https://github.com/sethmlarson/pypi-data) with a partial dump of the PyPI database.
 
 1. [Download the latest dump](https://github.com/sethmlarson/pypi-data/releases). If you want to reproduce my results, pick the same as I'm going to use: [2023-10-31](https://github.com/sethmlarson/pypi-data/releases/tag/2023.10.31) (spooky! 🎃).
 1. Extract: `gunzip pypi.db.gz`.
@@ -23,7 +23,7 @@ We could manually try random package names and check their owner but there is a 
 
 ## Probing the data
 
-The table `packages` contains all packages with their name, the latest released version number, last updated date, and some other info. For example, let's select stats for [textdistance](https://github.com/life4/textdistance):
+The table `packages` contains all packages with their name, the latest released version number, the last update date, and some other info. For example, let's select stats for [textdistance](https://github.com/life4/textdistance):
 
 ```sql
 SELECT * FROM packages WHERE name = 'textdistance';
@@ -94,9 +94,9 @@ LIMIT       20;
 You may recognize some names on the list.
 
 * The apparent leader is [OCA](pypi.org/user/OCA), also known as [Odoo Community Association](https://odoo-community.org/). [Odoo](https://en.wikipedia.org/wiki/Odoo) is a popular [open-source](https://github.com/odoo/odoo) enterprise CRM with Python backend. Their PyPI account holds a bunch of Odoo plugins.
-* Next goes [alexjxd](https://pypi.org/user/alexjxd/), also known as [Alex Jiang](https://github.com/AlexJXD). THis is an Alibaba employee, and their account holds [alibabacloud-python-sdk](https://github.com/aliyun/alibabacloud-python-sdk) componenets. It is poorly documented but what I noticed is that all components have a date suffix, like `ddosbgp-20180201`. So, it's some kind of additional versioning going on.
+* Next goes [alexjxd](https://pypi.org/user/alexjxd/), also known as [Alex Jiang](https://github.com/AlexJXD). This is an Alibaba employee, and their account holds [alibabacloud-python-sdk](https://github.com/aliyun/alibabacloud-python-sdk) components. It is poorly documented but what I noticed is that all components have a date suffix, like `ddosbgp-20180201`. So, it's some kind of additional versioning going on.
 * The third place goes to [wix-ci](https://pypi.org/user/wix-ci/), holding a bunch of plugins for [wix.com](https://www.wix.com/).
-* The [yandex-bot](https://pypi.org/user/yandex-bot/), claimed to be owned by "[Yandex](https://en.wikipedia.org/wiki/Yandex) Security Team", owns 1200 names, including names like [and](https://pypi.org/project/and/), [nu](https://pypi.org/project/nu/), [aiostat](https://pypi.org/project/aiostat/), [apilib](https://pypi.org/project/apilib/), [cpp_grader](https://pypi.org/project/cpp_grader/), [tmp2](https://pypi.org/project/tmp2/), [minify](https://pypi.org/project/minify/), and many other generic names. Each description says: "A package to prevent Dependency Confusion attacks against Yandex". So, we see name squatting to prevent name squatting. "The best defense is a good offense". Should this be allowed? And the whole situation suddenly takes political turn when you consider that Yandex LLC is a Russian company.
+* The [yandex-bot](https://pypi.org/user/yandex-bot/), claimed to be owned by "[Yandex](https://en.wikipedia.org/wiki/Yandex) Security Team", owns 1200 names, including names like [and](https://pypi.org/project/and/), [nu](https://pypi.org/project/nu/), [aiostat](https://pypi.org/project/aiostat/), [apilib](https://pypi.org/project/apilib/), [cpp_grader](https://pypi.org/project/cpp_grader/), [tmp2](https://pypi.org/project/tmp2/), [minify](https://pypi.org/project/minify/), and many other generic names. Each description says: "A package to prevent Dependency Confusion attacks against Yandex". So, we see name squatting to prevent name squatting. "The best defense is a good offense". Should this be allowed? And the whole situation suddenly takes a political turn when you consider that Yandex LLC is a Russian company.
 
 You can check the rest of the list yourself if you're curious. For now, let's find something more interesting.
 
@@ -104,7 +104,7 @@ You can check the rest of the list yourself if you're curious. For now, let's fi
 
 [Name squatting](https://en.wikipedia.org/wiki/Cybersquatting) is when someone registers a bunch of common names to sell them later. It is very common with DNS, social media, and package registries. This is why Steam is [steampowered.com](https://store.steampowered.com/).
 
-The best heuristic would be to find users with the most single-release packages, but we don't have this information in the dataset. Instead, we can have a look at users with all packages having the same version number. The assumption is that when all names registered using one tool or one placeholder project metadata, they all will have the same version.
+The best heuristic would be to find users with the most single-release packages, but we don't have this information in the dataset. Instead, we can have a look at users with all packages having the same version number. The assumption is that when all names are registered using one tool or one placeholder project metadata, they all will have the same version.
 
 ```sql
 SELECT
@@ -144,17 +144,17 @@ LIMIT     20;
 | [stastnypremysl](https://pypi.org/user/stastnypremysl) | [pycom-artifactory-automation](https://pypi.org/project/pycom-artifactory-automation) | 0.0.1 | 18 |
 | [edtb](https://pypi.org/user/edtb) | [testwizard-android-set-top-box](https://pypi.org/project/testwizard-android-set-top-box) | 3.7.0 | 17 |
 
-* The thing I haven't noticed about [wix-ci](https://pypi.org/user/wix-ci/) before is that all the packages are released in one go, between 2021-02-11 and 2021-02-14, and haven't been touched since. And when I check the content of the packages, they are all empty, without any code inside. Busted!
+* The thing I haven't noticed about [wix-ci](https://pypi.org/user/wix-ci/) before is that all the packages are released in one go, between 2021-02-11 and 2021-02-14, and haven't been touched since. When I check the content of the packages, they are all empty, without any code inside. Busted!
 * [alexanderkjall](https://pypi.org/user/alexanderkjall/), also known as [Alexander Kjäll](https://github.com/alexanderkjall), holds 244 packages with the description "PyPi package created by [Schibsted](https://schibsted.com/)'s Product & Application Security team". Yet another example of "to prevent squatting, let's squad first". The names include [schlearn](https://pypi.org/project/schlearn) (which sounds like [sklearn](https://pypi.org/project/sklearn)), [s3-helpers](https://pypi.org/project/s3-helpers), [christian](https://pypi.org/project/christian), [ip-library](https://pypi.org/project/ip-library), [datadog-linter](https://pypi.org/project/datadog-linter), etc.
-* [doxops](https://pypi.org/user/doxops) is yeat another company squatting their private names.
-* [akarmakar](https://pypi.org/user/akarmakar/) squats package names for nvidia, like [nvidia-raft-dask-cu116](https://pypi.org/project/nvidia-raft-dask-cu116/). If you try to install any of these, you'll get an installation failure telling you to use [NVIDIA Python Package Index](https://pypi.org/project/nvidia-pyindex/). This is similar to other case of "safety squatting" but at least this time it serves a purpose for a public project users, not just a single company employees.
-* [shadowwalker2718](https://pypi.org/user/shadowwalker2718/) is the first instance of name squatting on the list done not by a big company. All the names they hold are the names of the real ML projects which you find on GitHub but which don't provide a PyPI distribution. They squatted [chatdoctor](https://pypi.org/project/chatdoctor/) for [ChatDoctor](https://github.com/Kent0n-Li/ChatDoctor), [controlnet](https://pypi.org/project/controlnet/) for [ControlNet](https://github.com/lllyasviel/ControlNet), [autogpt](https://pypi.org/project/autogpt/) for [AutoGPT](https://github.com/Significant-Gravitas/AutoGPT), etc. Most of the registered projects have the description copied from the real project and even some dependencies but no code inside.
+* [doxops](https://pypi.org/user/doxops) is yet another company squatting their private names.
+* [akarmakar](https://pypi.org/user/akarmakar/) squats package names for nvidia, like [nvidia-raft-dask-cu116](https://pypi.org/project/nvidia-raft-dask-cu116/). If you try to install any of these, you'll get an installation failure telling you to use [NVIDIA Python Package Index](https://pypi.org/project/nvidia-pyindex/). This is similar to other cases of "safety squatting" but at least this time it serves a purpose for public project users, not just employees of a single company.
+* [shadowwalker2718](https://pypi.org/user/shadowwalker2718/) is the first instance of name squatting on the list done not by a big company. All the names they hold are the names of the real ML projects that you find on GitHub but which don't provide a PyPI distribution. They squatted [chatdoctor](https://pypi.org/project/chatdoctor/) for [ChatDoctor](https://github.com/Kent0n-Li/ChatDoctor), [controlnet](https://pypi.org/project/controlnet/) for [ControlNet](https://github.com/lllyasviel/ControlNet), [autogpt](https://pypi.org/project/autogpt/) for [AutoGPT](https://github.com/Significant-Gravitas/AutoGPT), etc. Most of the registered projects have the description copied from the real project and even some dependencies but no code inside.
 
 I checked more users from the list. Lots and lots of squatters. Some are companies squatting their internal names, some are individuals holding nice names for sale.
 
 ## Finding more squatters
 
-We can tweak the query above to show us people with versions between 2 and 5. Some of the squatters might sligtly change the version number or re-release a package with new fake content.
+We can tweak the query above to show us people with versions between 2 and 5. Some of the squatters might slightly change the version number or re-release a package with new fake content.
 
 ```sql
 SELECT
@@ -232,11 +232,11 @@ LIMIT    20;
 | [doxops](https://pypi.org/user/doxops)                    | data-dags                 | 0.0.1   | 53   |
 | [abhishek4273](https://pypi.org/user/abhishek4273)              | monk-colab                | 0.0.1   | 50   |
 
-This method gives quite a few false-positives (legit people who release lots of one-off packages) but still, finds some interesting cases.
+This method gives quite a few false positives (legit people who release lots of one-off packages) but still, finds some interesting cases.
 
 ## Putting it all together
 
-So, how many squatters we've found? Combining all the methods above and manually removing false-positives:
+So, how many squatters we've found? Combining all the methods above and manually removing false positives:
 
 Companies:
 
