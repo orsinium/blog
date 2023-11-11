@@ -70,30 +70,30 @@ LIMIT       20;
 
 | name                                                 | cnt   |
 | ---------------------------------------------------- | ----- |
-| [OCA](pypi.org/user/OCA)                             | 14928 |
-| [alexjxd](pypi.org/user/alexjxd)                     | 1577  |
-| [wix-ci](pypi.org/user/wix-ci)                       | 1539  |
-| [yandex-bot](pypi.org/user/yandex-bot)               | 1196  |
-| [openstackci](pypi.org/user/openstackci)             | 735   |
-| [vemel](pypi.org/user/vemel)                         | 734   |
-| [microsoft](pypi.org/user/microsoft)                 | 671   |
-| [davisagli](pypi.org/user/davisagli)                 | 520   |
-| [hansalemao](pypi.org/user/hansalemao)               | 501   |
-| [hannosch](pypi.org/user/hannosch)                   | 500   |
-| [icemac](pypi.org/user/icemac)                       | 449   |
-| [google_opensource](pypi.org/user/google_opensource) | 415   |
-| [faassen](pypi.org/user/faassen)                     | 401   |
-| [agroszer](pypi.org/user/agroszer)                   | 361   |
-| [dlech](pypi.org/user/dlech)                         | 360   |
-| [thejcannon](pypi.org/user/thejcannon)               | 360   |
-| [adafruit-travis](pypi.org/user/adafruit-travis)     | 352   |
-| [pycopy-lib](pypi.org/user/pycopy-lib)               | 347   |
-| [azure-sdk](pypi.org/user/azure-sdk)                 | 343   |
-| [aws-cdk](pypi.org/user/aws-cdk)                     | 337   |
+| [OCA](https://pypi.org/user/OCA)                             | 14928 |
+| [alexjxd](https://pypi.org/user/alexjxd)                     | 1577  |
+| [wix-ci](https://pypi.org/user/wix-ci)                       | 1539  |
+| [yandex-bot](https://pypi.org/user/yandex-bot)               | 1196  |
+| [openstackci](https://pypi.org/user/openstackci)             | 735   |
+| [vemel](https://pypi.org/user/vemel)                         | 734   |
+| [microsoft](https://pypi.org/user/microsoft)                 | 671   |
+| [davisagli](https://pypi.org/user/davisagli)                 | 520   |
+| [hansalemao](https://pypi.org/user/hansalemao)               | 501   |
+| [hannosch](https://pypi.org/user/hannosch)                   | 500   |
+| [icemac](https://pypi.org/user/icemac)                       | 449   |
+| [google_opensource](https://pypi.org/user/google_opensource) | 415   |
+| [faassen](https://pypi.org/user/faassen)                     | 401   |
+| [agroszer](https://pypi.org/user/agroszer)                   | 361   |
+| [dlech](https://pypi.org/user/dlech)                         | 360   |
+| [thejcannon](https://pypi.org/user/thejcannon)               | 360   |
+| [adafruit-travis](https://pypi.org/user/adafruit-travis)     | 352   |
+| [pycopy-lib](https://pypi.org/user/pycopy-lib)               | 347   |
+| [azure-sdk](https://pypi.org/user/azure-sdk)                 | 343   |
+| [aws-cdk](https://pypi.org/user/aws-cdk)                     | 337   |
 
 You may recognize some names on the list.
 
-* The apparent leader is [OCA](pypi.org/user/OCA), also known as [Odoo Community Association](https://odoo-community.org/). [Odoo](https://en.wikipedia.org/wiki/Odoo) is a popular [open-source](https://github.com/odoo/odoo) enterprise CRM with Python backend. Their PyPI account holds a bunch of Odoo plugins.
+* The apparent leader is [OCA](https://pypi.org/user/OCA), also known as [Odoo Community Association](https://odoo-community.org/). [Odoo](https://en.wikipedia.org/wiki/Odoo) is a popular [open-source](https://github.com/odoo/odoo) enterprise CRM with Python backend. Their PyPI account holds a bunch of Odoo plugins.
 * Next goes [alexjxd](https://pypi.org/user/alexjxd/), also known as [Alex Jiang](https://github.com/AlexJXD). This is an Alibaba employee, and their account holds [alibabacloud-python-sdk](https://github.com/aliyun/alibabacloud-python-sdk) components. It is poorly documented but what I noticed is that all components have a date suffix, like `ddosbgp-20180201`. So, it's some kind of additional versioning going on.
 * The third place goes to [wix-ci](https://pypi.org/user/wix-ci/), holding a bunch of plugins for [wix.com](https://www.wix.com/).
 * The [yandex-bot](https://pypi.org/user/yandex-bot/), claimed to be owned by "[Yandex](https://en.wikipedia.org/wiki/Yandex) Security Team", owns 1200 names, including names like [and](https://pypi.org/project/and/), [nu](https://pypi.org/project/nu/), [aiostat](https://pypi.org/project/aiostat/), [apilib](https://pypi.org/project/apilib/), [cpp_grader](https://pypi.org/project/cpp_grader/), [tmp2](https://pypi.org/project/tmp2/), [minify](https://pypi.org/project/minify/), and many other generic names. Each description says: "A package to prevent Dependency Confusion attacks against Yandex". So, we see name squatting to prevent name squatting. "The best defense is a good offense". Should this be allowed? And the whole situation suddenly takes a political turn when you consider that Yandex LLC is a Russian company.
@@ -250,7 +250,7 @@ Companies:
 1. [platform-kiwi](https://pypi.org/user/platform-kiwi) (Kiwi)
 1. [wix-ci](https://pypi.org/user/wix-ci) (Wix)
 1. [workiva](https://pypi.org/user/workiva) (Workiva)
-1. [yandex-bot](pypi.org/user/yandex-bot) (Yandex)
+1. [yandex-bot](https://pypi.org/user/yandex-bot) (Yandex)
 
 Individual squatters:
 
