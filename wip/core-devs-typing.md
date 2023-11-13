@@ -1,5 +1,5 @@
 ---
-title: "HOw many Python core devs use tpying?"
+title: "How many Python core devs use tpying?"
 date: 2023-11-11
 tags:
   - python
@@ -8,6 +8,8 @@ tags:
 The optional type annotations in Python is a big and relatively new thing. For the majority of its life, Python didn't have any good solution for static type checking, and people coming to the language fell in love with it for different reasons.
 
 Today's case study: how many old-school Python developers use type annotations? Specifically, we'll be looking at the core developers because these are mostly people the most deicated to the language.
+
+**TL;DR:** from all Python core devs ever, about 52% have recent open-source projects and **37% of them use type annotations**. Out of people joining the team in the past 3 years, 71% use type annotations.
 
 ## The list of core developers
 
@@ -34,6 +36,8 @@ Legend:
 * ❌: no projects with type annotations.
 * 🤷: no public projects in the past 5 years.
 * ?: no GitHub profile. They might have projects somewhere else.
+
+From new to old:
 
 |   | Name | Joined | Left |
 |---|------|--------|------|
@@ -227,3 +231,33 @@ Legend:
 | ❌ | [Jack Jansen](https://github.com/jackjansen) | 1992-08-13 | |
 | 🤷 | [Sjoerd Mullender](https://github.com/sjoerdmullender) | 1992-08-04 | 2020-11-14 |
 | ✅ | [Guido van Rossum](https://github.com/gvanrossum) | 1989-12-25 | |
+
+## Summary
+
+Numbers:
+
+* Total: 190
+* Currently active: 109
+* ✅: 37
+* ❌: 62
+* 🤷: 37
+* ?: 54
+
+All results from old to new:
+
+✅ 🤷 ❌ ❌ ❌ 🤷 🤷 🤷 ❌ ? ? ? ? ? ❌ 🤷 ? ❌ ❌ ? ? 🤷 ? 🤷 ? ❌ ❌ ? ? ? ? 🤷 ? ? ? ? ✅ ? ? ✅ ? ❌ ? ❌ ✅ ? ? ? ✅ 🤷 ? ? ? ❌ ❌ 🤷 🤷 ? ? ❌ ? 🤷 🤷 ❌ ❌ ❌ ? ? ? 🤷 ? ? ? ❌ ❌ ? 🤷 ? ? ? ❌ 🤷 ❌ ❌ ❌ ❌ ? ? 🤷 ? ❌ ❌ ❌ ? ❌ ✅ ❌ ✅ 🤷 ❌ ? ❌ 🤷 ❌ ❌ 🤷 ? ❌ ? ❌ ❌ ❌ ✅ 🤷 ? ✅ ✅ ❌ 🤷 ❌ ? ✅ 🤷 ? ? ❌ ❌ 🤷 🤷 ❌ ✅ ? ✅ ? ❌ ❌ ✅ ❌ ✅ ❌ ✅ 🤷 ✅ ❌ ❌ 🤷 ✅ ❌ 🤷 🤷 🤷 ❌ ❌ ❌ ✅ ✅ ❌ ✅ 🤷 ❌ ❌ ❌ 🤷 ❌ ❌ ✅ ❌ 🤷 ❌ ✅ 🤷 ✅ ✅ ✅ 🤷 ✅ 🤷 ❌ ✅ 🤷 ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ❌ ✅
+
+Results from old to new with removed unknowns:
+
+✅ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ✅ ✅ ❌ ❌ ✅ ✅ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ✅ ❌ ✅ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ✅ ✅ ✅ ❌ ❌ ✅ ❌ ❌ ❌ ✅ ✅ ❌ ❌ ✅ ❌ ✅ ❌ ✅ ✅ ❌ ❌ ✅ ❌ ❌ ❌ ❌ ✅ ✅ ❌ ✅ ❌ ❌ ❌ ❌ ❌ ✅ ❌ ❌ ✅ ✅ ✅ ✅ ✅ ❌ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ❌ ✅
+
+Results from old to new for currently active members:
+
+✅ ❌ ❌ ❌ ❌ ❌ 🤷 ❌ 🤷 ❌ 🤷 ✅ ✅ ❌ ❌ ✅ 🤷 ❌ ❌ 🤷 ❌ 🤷 ❌ ❌ ❌ ❌ ❌ ❌ ❌ 🤷 ❌ ❌ ✅ ❌ ✅ ❌ ❌ ❌ 🤷 ❌ ❌ ❌ ❌ ✅ 🤷 ✅ ✅ 🤷 ✅ 🤷 ❌ ❌ 🤷 ✅ ✅ ❌ ❌ ✅ ❌ ✅ ❌ ✅ 🤷 ✅ ❌ ❌ 🤷 ✅ 🤷 🤷 ❌ ❌ ❌ ✅ ✅ ❌ ✅ 🤷 ❌ ❌ ❌ 🤷 ❌ ❌ ✅ ❌ 🤷 ❌ ✅ 🤷 ✅ ✅ ✅ 🤷 ✅ 🤷 ❌ ✅ 🤷 ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ❌ ✅
+
+* The total number of Python core devs using type annotations depends on how you count:
+  * 19% (37/190) if you count unknowns.
+  * 37% (37/99) if you consider only people with recent open-source activity.
+  * 33% (36/109) or 41% (36/86) if you count only current team members (including and excluding unknowns).
+  * 71% (15/21) if you count only people who joined the team since 2020.
+* Around 48% of all Python core developers don't have their own open source projects and didn't do any open-source contributions in the recent years. Probably, many of them are simply retired, the language is over 30 years old.
