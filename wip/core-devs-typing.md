@@ -7,9 +7,9 @@ tags:
 
 The optional type annotations in Python is a big and relatively new thing. For the majority of its life, Python didn't have any good solution for static type checking, and people coming to the language fell in love with it for different reasons.
 
-Today's case study: how many old-school Python developers use type annotations? Specifically, we'll be looking at the core developers because these are mostly people the most deicated to the language.
+Today's case study: how many old-school Python developers use type annotations? Specifically, we'll be looking at the core developers because these are mostly people the most dedicated to the language.
 
-**TL;DR:** from all Python core devs ever, about 52% have recent open-source projects and **37% of them use type annotations**. Out of people joining the team in the past 3 years, 71% use type annotations.
+**TL;DR:** Out of all Python core devs ever, about 52% have recent open-source projects, and **37% of them use type annotations**. Out of people joining the team in the past 3 years, 71% use type annotations.
 
 ## The list of core developers
 
@@ -18,13 +18,13 @@ First, we need a list of Python core team members. Not only present but past as 
 The sources I've found:
 
 * [devguide.python.org](https://devguide.python.org/core-developers/developer-log/index.html) is the best source. It includes names, dates, and GitHub usernames. 188 people.
-* [github.com](https://github.com/python/cpython/graphs/contributors) has a list of CPython contributors, about 2500 people at the moment who ever changed aven a single line of Python code.
-* [github.com](https://github.com/orgs/python/people) also has list of the Python org members.
+* [github.com](https://github.com/python/cpython/graphs/contributors) has a list of CPython contributors, about 2500 people at the moment who ever changed even a single line of Python code.
+* [github.com](https://github.com/orgs/python/people) also has a list of the Python org members.
 * [discuss.python.org](https://discuss.python.org/groups/committers) list 105 CPython core developers.
 
 ## Methodology
 
-I open GitHub page of the person (or find another website they use for hosting open-source projects), find the latest non-fork project, and check if it has type annotations. I look only at projects updated in the past few years. I prefer checking public libraries created for others to sue but if there are none, I also check scripts they have for their own use (like a script to deploy a personal blog).
+I open the GitHub page of the person (or find another website they use for hosting open-source projects), find the latest non-fork project, and check if it has type annotations. I look only at projects updated in the past few years. I prefer checking public libraries created for others to sue but if there are none, I also check scripts they have for their own use (like a script to deploy a personal blog).
 
 Since the process is manual and tedious and the list is long, I might be wrong in some cases. Contributions are welcome.
 
@@ -260,4 +260,4 @@ Results from old to new for currently active members:
   * 37% (37/99) if you consider only people with recent open-source activity.
   * 33% (36/109) or 41% (36/86) if you count only current team members (including and excluding unknowns).
   * 71% (15/21) if you count only people who joined the team since 2020.
-* Around 48% of all Python core developers don't have their own open source projects and didn't do any open-source contributions in the recent years. Probably, many of them are simply retired, the language is over 30 years old.
+* Around 48% of all Python core developers don't have their own open-source projects and haven't made any open-source contributions in recent years. Probably, many of them are simply retired; the language is over 30 years old.
