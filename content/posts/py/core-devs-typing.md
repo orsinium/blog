@@ -1,6 +1,6 @@
 ---
-title: "How many Python core devs use tpying?"
-date: 2023-11-11
+title: "How many Python core devs use typing?"
+date: 2023-11-13
 tags:
   - python
 ---
