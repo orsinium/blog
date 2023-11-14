@@ -9,7 +9,7 @@ The optional type annotations in Python is a big and relatively new thing. For t
 
 Today's case study: how many old-school Python developers use type annotations? Specifically, we'll be looking at the core developers because these are mostly people the most dedicated to the language.
 
-**TL;DR:** Out of all Python core devs ever, about 52% have recent open-source projects, and **37% of them use type annotations**. Out of people joining the team in the past 3 years, 71% use type annotations.
+**TL;DR:** Out of all Python core devs ever, about 53% have recent open-source projects, and **39% of them use type annotations**. Out of people joining the team in the past 3 years, 76% use type annotations.
 
 ## The list of core developers
 
@@ -54,7 +54,7 @@ From new to old:
 | 🤷 | [Erlend Egeberg Aasland](https://github.com/erlend-aasland) | 2022-05-05 | |
 | ✅ | [Jelle Zijlstra](https://github.com/JelleZijlstra) | 2022-02-15 | |
 | ❌ | [Dennis Sweeney](https://github.com/sweeneyde) | 2022-02-02 | |
-| 🤷 | [Ken Jin](https://github.com/Fidget-Spinner) | 2021-08-26 | |
+| ✅ | [Ken Jin](https://github.com/Fidget-Spinner) | 2021-08-26 | |
 | ✅ | [Ammar Askar](https://github.com/ammaraskar) | 2021-07-30 | |
 | 🤷 | [Irit Katriel](https://github.com/iritkatriel) | 2021-05-10 | |
 | ✅ | [Batuhan Taskaya](https://github.com/isidentical) | 2020-11-08 | |
@@ -165,7 +165,7 @@ From new to old:
 | ? | Steven Bethard | 2006-04-27 | 2017-02-10 |
 | ? | Gerhard Häring | 2006-04-23 | 2017-02-10 |
 | ? | George Yoshida | 2006-04-17 | 2017-02-10 |
-| ❌ | [Ronald Oussoren](https://github.com/ronaldoussoren) | 2006-03-03 | |
+| ✅ | [Ronald Oussoren](https://github.com/ronaldoussoren) | 2006-03-03 | |
 | ❌ | [Alyssa Coghlan](https://github.com/ncoghlan) | 2005-10-16 | |
 | ❌ | [Georg Brandl](https://github.com/birkenfeld) | 2005-05-28 | |
 | 🤷 | [Terry Jan Reedy](https://github.com/terryjreedy) | 2005-04-07 | |
@@ -238,26 +238,26 @@ Numbers:
 
 * Total: 190
 * Currently active: 109
-* ✅: 37
-* ❌: 62
-* 🤷: 37
+* ✅: 39
+* ❌: 61
+* 🤷: 36
 * ?: 54
 
 All results from old to new:
 
-✅ 🤷 ❌ ❌ ❌ 🤷 🤷 🤷 ❌ ? ? ? ? ? ❌ 🤷 ? ❌ ❌ ? ? 🤷 ? 🤷 ? ❌ ❌ ? ? ? ? 🤷 ? ? ? ? ✅ ? ? ✅ ? ❌ ? ❌ ✅ ? ? ? ✅ 🤷 ? ? ? ❌ ❌ 🤷 🤷 ? ? ❌ ? 🤷 🤷 ❌ ❌ ❌ ? ? ? 🤷 ? ? ? ❌ ❌ ? 🤷 ? ? ? ❌ 🤷 ❌ ❌ ❌ ❌ ? ? 🤷 ? ❌ ❌ ❌ ? ❌ ✅ ❌ ✅ 🤷 ❌ ? ❌ 🤷 ❌ ❌ 🤷 ? ❌ ? ❌ ❌ ❌ ✅ 🤷 ? ✅ ✅ ❌ 🤷 ❌ ? ✅ 🤷 ? ? ❌ ❌ 🤷 🤷 ❌ ✅ ? ✅ ? ❌ ❌ ✅ ❌ ✅ ❌ ✅ 🤷 ✅ ❌ ❌ 🤷 ✅ ❌ 🤷 🤷 🤷 ❌ ❌ ❌ ✅ ✅ ❌ ✅ 🤷 ❌ ❌ ❌ 🤷 ❌ ❌ ✅ ❌ 🤷 ❌ ✅ 🤷 ✅ ✅ ✅ 🤷 ✅ 🤷 ❌ ✅ 🤷 ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ❌ ✅
+✅ 🤷 ❌ ❌ ❌ 🤷 🤷 🤷 ❌ ? ? ? ? ? ❌ 🤷 ? ❌ ❌ ? ? 🤷 ? 🤷 ? ❌ ❌ ? ? ? ? 🤷 ? ? ? ? ✅ ? ? ✅ ? ❌ ? ❌ ✅ ? ? ? ✅ 🤷 ? ? ? ❌ ❌ 🤷 🤷 ? ? ❌ ? 🤷 🤷 ❌ ❌ ✅ ? ? ? 🤷 ? ? ? ❌ ❌ ? 🤷 ? ? ? ❌ 🤷 ❌ ❌ ❌ ❌ ? ? 🤷 ? ❌ ❌ ❌ ? ❌ ✅ ❌ ✅ 🤷 ❌ ? ❌ 🤷 ❌ ❌ 🤷 ? ❌ ? ❌ ❌ ❌ ✅ 🤷 ? ✅ ✅ ❌ 🤷 ❌ ? ✅ 🤷 ? ? ❌ ❌ 🤷 🤷 ❌ ✅ ? ✅ ? ❌ ❌ ✅ ❌ ✅ ❌ ✅ 🤷 ✅ ❌ ❌ 🤷 ✅ ❌ 🤷 🤷 🤷 ❌ ❌ ❌ ✅ ✅ ❌ ✅ 🤷 ❌ ❌ ❌ 🤷 ❌ ❌ ✅ ❌ 🤷 ❌ ✅ 🤷 ✅ ✅ ✅ 🤷 ✅ ✅ ❌ ✅ 🤷 ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ❌ ✅
 
 Results from old to new with removed unknowns:
 
-✅ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ✅ ✅ ❌ ❌ ✅ ✅ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ✅ ❌ ✅ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ✅ ✅ ✅ ❌ ❌ ✅ ❌ ❌ ❌ ✅ ✅ ❌ ❌ ✅ ❌ ✅ ❌ ✅ ✅ ❌ ❌ ✅ ❌ ❌ ❌ ❌ ✅ ✅ ❌ ✅ ❌ ❌ ❌ ❌ ❌ ✅ ❌ ❌ ✅ ✅ ✅ ✅ ✅ ❌ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ❌ ✅
+✅ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ✅ ✅ ❌ ❌ ✅ ✅ ❌ ❌ ❌ ❌ ❌ ✅ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ✅ ❌ ✅ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ❌ ✅ ✅ ✅ ❌ ❌ ✅ ❌ ❌ ❌ ✅ ✅ ❌ ❌ ✅ ❌ ✅ ❌ ✅ ✅ ❌ ❌ ✅ ❌ ❌ ❌ ❌ ✅ ✅ ❌ ✅ ❌ ❌ ❌ ❌ ❌ ✅ ❌ ❌ ✅ ✅ ✅ ✅ ✅ ✅ ❌ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ❌ ✅
 
 Results from old to new for currently active members:
 
-✅ ❌ ❌ ❌ ❌ ❌ 🤷 ❌ 🤷 ❌ 🤷 ✅ ✅ ❌ ❌ ✅ 🤷 ❌ ❌ 🤷 ❌ 🤷 ❌ ❌ ❌ ❌ ❌ ❌ ❌ 🤷 ❌ ❌ ✅ ❌ ✅ ❌ ❌ ❌ 🤷 ❌ ❌ ❌ ❌ ✅ 🤷 ✅ ✅ 🤷 ✅ 🤷 ❌ ❌ 🤷 ✅ ✅ ❌ ❌ ✅ ❌ ✅ ❌ ✅ 🤷 ✅ ❌ ❌ 🤷 ✅ 🤷 🤷 ❌ ❌ ❌ ✅ ✅ ❌ ✅ 🤷 ❌ ❌ ❌ 🤷 ❌ ❌ ✅ ❌ 🤷 ❌ ✅ 🤷 ✅ ✅ ✅ 🤷 ✅ 🤷 ❌ ✅ 🤷 ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ❌ ✅
+✅ ❌ ❌ ❌ ❌ ❌ 🤷 ❌ 🤷 ❌ 🤷 ✅ ✅ ❌ ❌ ✅ 🤷 ❌ ❌ 🤷 ❌ 🤷 ❌ ❌ ✅ ❌ ❌ ❌ ❌ 🤷 ❌ ❌ ✅ ❌ ✅ ❌ ❌ ❌ 🤷 ❌ ❌ ❌ ❌ ✅ 🤷 ✅ ✅ 🤷 ✅ 🤷 ❌ ❌ 🤷 ✅ ✅ ❌ ❌ ✅ ❌ ✅ ❌ ✅ 🤷 ✅ ❌ ❌ 🤷 ✅ 🤷 🤷 ❌ ❌ ❌ ✅ ✅ ❌ ✅ 🤷 ❌ ❌ ❌ 🤷 ❌ ❌ ✅ ❌ 🤷 ❌ ✅ 🤷 ✅ ✅ ✅ 🤷 ✅ ✅ ❌ ✅ 🤷 ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ❌ ✅
 
 * The total number of Python core devs using type annotations depends on how you count:
-  * 19% (37/190) if you count unknowns.
-  * 37% (37/99) if you consider only people with recent open-source activity.
-  * 33% (36/109) or 41% (36/86) if you count only current team members (including and excluding unknowns).
-  * 71% (15/21) if you count only people who joined the team since 2020.
-* Around 48% of all Python core developers don't have their own open-source projects and haven't made any open-source contributions in recent years. Probably, many of them are simply retired; the language is over 30 years old.
+  * 21% (39/190) if you count unknowns.
+  * 39% (39/100) if you consider only people with recent open-source activity.
+  * 35% (38/109) or 44% (38/87) if you count only current team members (including and excluding unknowns).
+  * 76% (16/21) if you count only people who joined the team since 2020.
+* Around 47% ((36+54)/190) of all Python core developers don't have their own open-source projects and haven't made any open-source contributions in recent years. Probably, many of them are simply retired; the language is over 30 years old.
