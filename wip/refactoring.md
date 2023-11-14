@@ -190,7 +190,6 @@ if __name__ == '__main__':
 
 ## Make it declarative
 
-
 ```python
 import math
 import sys
@@ -359,7 +358,6 @@ def entrypoint(argv: Sequence[str]) -> int:
     except SystemExit as exc:
         return exc.code
 ```
-
 
 ## Result
 

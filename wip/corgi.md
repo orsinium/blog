@@ -16,14 +16,14 @@ Corgi is a programming language
 
 ## Atoms
 
-```
+```text
 atom True
 atom False
 ```
 
 ## Custom Types
 
-```
+```text
 # set of values or atoms
 type Bool = True or False
 
@@ -42,7 +42,7 @@ type Maybe = Just or Nothing
 
 Type casting:
 
-```
+```text
 # cast
 ok = Bool(True)
 answ = Answer(ok)
@@ -52,7 +52,7 @@ It is optional since we have type inference but still useful to have stricter ty
 
 ## Built-in Types
 
-```
+```text
 # std.Int
 12
 
@@ -70,7 +70,7 @@ All other types can be constructed from it.
 
 A few useful functions:
 
-```
+```text
 import "int"
 import "str"
 
@@ -80,7 +80,7 @@ str.unescape("\n")
 
 ## Functions
 
-```
+```text
 import "std"
 
 func fib
@@ -95,7 +95,7 @@ func fib
 
 Any globally defined value is a constant. Constant can be either Int, Float, Str, or atom
 
-```
+```text
 PI = 3.1415
 ```
 
@@ -103,7 +103,7 @@ PI = 3.1415
 
 Default value can be only a constant
 
-```
+```text
 DEFAULT_STEP = 1
 
 type Range
@@ -122,7 +122,7 @@ func fib
 
 Any type field default value can be accessed without creating an instance. You can use it for enums:
 
-```
+```text
 Color = std.Str
 type Colors
   red = Color(1)
@@ -134,7 +134,7 @@ Colors.red # 1
 
 ## Methods
 
-```
+```text
 type Count
   start = 0
 
@@ -149,7 +149,7 @@ c.next() # 2
 
 Funcs:
 
-```
+```text
 # without passing arguments
 user.activate()
 
@@ -159,7 +159,7 @@ int.from_hex("F1")
 
 Variadic arguments:
 
-```
+```text
 func slice
   public values...
   return None
@@ -169,7 +169,7 @@ slice(1, 2, 3)
 
 ## Conditions and cycles
 
-```
+```text
 if user.is_active()
   ...
 
@@ -184,7 +184,7 @@ for i in std.Range(stop=10)
 
 Golang concurrency is nice and powerful:
 
-```
+```text
 type Range
   start = 0
   end
@@ -207,7 +207,7 @@ type Range
 
 Pointers management is done by compiler. Humans use mutability conception instead. Everything is immutable by default. If you want to call a method or function that mutates an object, you must create the object with `mut` keyword:
 
-```
+```text
 type Chan(T)
   size std.Int
 
@@ -228,7 +228,7 @@ ch.send(1)
 
 Markers is a way to track side-effects:
 
-```
+```text
 mark io
 func print
   public value std.Str
@@ -260,7 +260,7 @@ You can use any markers you wish. Stdlib funcs has `io`, `network`, and `raises`
 
 Yes, we have exceptions. "Let it crash". Exceptions are tracked by markers mechanism.
 
-```
+```text
 func divide
   raise ZeroDivisionError
 
@@ -288,7 +288,7 @@ func divide
 
 Specify markers for caller func to have control over it:
 
-```
+```text
 # ok
 func main
   divide()
@@ -311,7 +311,7 @@ func main
 
 Catch in Python style:
 
-```
+```text
 try
   raise SomeError
 catch SomeError as error
@@ -323,7 +323,7 @@ catch SomeError as error
 
 When it is possible, `assert` will be checked on partial evaluation stage at compile time:
 
-```
+```text
 func divide
   public value std.Float
   public on std.Float
@@ -339,7 +339,7 @@ func main
 
 You can match a pattern on strings with globs:
 
-```
+```text
 import int
 import std
 
