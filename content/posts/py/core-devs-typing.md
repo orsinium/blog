@@ -24,7 +24,7 @@ The sources I've found:
 
 ## Methodology
 
-I open the GitHub page of the person (or find another website they use for hosting open-source projects), find the latest non-fork project, and check if it has type annotations. I look only at projects updated in the past few years. I prefer checking public libraries created for others to sue but if there are none, I also check scripts they have for their own use (like a script to deploy a personal blog).
+I open the GitHub page of the person (or find another website they use for hosting open-source projects), find the latest non-fork project, and check if it has type annotations. I look only at projects updated in the past few years. I prefer checking public libraries created for others to use but if there are none, I also check scripts they have for their own use (like a script to deploy a personal blog).
 
 Since the process is manual and tedious and the list is long, I might be wrong in some cases. Contributions are welcome.
 
