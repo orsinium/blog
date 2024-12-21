@@ -17,7 +17,7 @@ minifyOutput = true
 env = "production"
 keywords = ["blog", "golang", "python", "elixir", "rust", "security"]
 # images = "["<link or path of image for opengraph, twitter-cards>"]"
-DateFormat = "2006-02-01"
+DateFormat = "2006-01-02"
 defaultTheme = "auto"
 disableThemeToggle = false
 
@@ -38,11 +38,11 @@ showtoc = true
 tocopen = false
 
 socialIcons = [
-    {name = "home",     url = "https://orsinium.dev/"},
-    {name = "rss",      url = "/index.xml"},
-    {name = "github",   url = "https://github.com/orsinium/"},
-    {name = "linkedin", url = "https://www.linkedin.com/in/orsinium/"},
-    {name = "telegram", url = "https://t.me/s/itgram_channel"},
+    { name = "home", url = "https://orsinium.dev/" },
+    { name = "rss", url = "/index.xml" },
+    { name = "github", url = "https://github.com/orsinium/" },
+    { name = "linkedin", url = "https://www.linkedin.com/in/orsinium/" },
+    { name = "telegram", url = "https://t.me/s/itgram_channel" },
 ]
 
 [params.editPost]
@@ -57,29 +57,29 @@ Content = "I write about 🐍 Python, 🏃 Go, 🧪 Elixir, 🦀 Rust, and some 
 [[menu.main]]
 name = "🏃 go"
 url = "/posts/go/"
-weight = "1"
+weight = 1
 
 [[menu.main]]
 name = "🐍 py"
 url = "/posts/py/"
-weight = "2"
+weight = 2
 
 [[menu.main]]
 name = "🗑 misc"
 url = "/posts/misc/"
-weight = "3"
+weight = 3
 
 [[menu.main]]
 name = "🏷 tags"
 url = "/tags/"
-weight = "10"
+weight = 10
 
 [[menu.main]]
 name = "📶 rss"
 url = "/index.xml"
-weight = "20"
+weight = 20
 
 [[menu.main]]
 name = "👋 me"
 url = "https://orsinium.dev"
-weight = "30"
+weight = 30
